@@ -22,7 +22,7 @@ app.UseSwagger(s =>
 });
 app.UseSwaggerUI(s =>
 {
-	s.SwaggerEndpoint("/documentation/v1/documentation.json", "BrewUp Minimal Api Template");
+	s.SwaggerEndpoint("/documentation/v1/documentation.json", "BrewUp API - REST Service");
 	s.RoutePrefix = "documentation";
 });
 
