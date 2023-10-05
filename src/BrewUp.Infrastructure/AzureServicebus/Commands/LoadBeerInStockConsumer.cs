@@ -15,6 +15,6 @@ public sealed class LoadBeerInStockConsumer : CommandConsumerBase<LoadBeerInStoc
     public LoadBeerInStockConsumer(IRepository repository, AzureServiceBusConfiguration azureServiceBusConfiguration,
         ILoggerFactory loggerFactory, ISerializer? messageSerializer = null) : base(azureServiceBusConfiguration, loggerFactory, messageSerializer)
     {
-        HandlerAsync = new LoadBeerInStockCommandHandler(repository, loggerFactory)
+        HandlerAsync = new LoadBeerInStockCommandHandler(repository, loggerFactory);
     }
 }
