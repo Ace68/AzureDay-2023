@@ -1,13 +1,18 @@
-﻿using BrewUp.Shared.Abstracts;
-using BrewUp.Shared.Events;
+﻿using BrewUp.Shared.Events;
+using Microsoft.Extensions.Logging;
+using Muflone.Messages.Events;
 
 namespace BrewUp.Modules.Warehouses.ReadModel.EventHandlers;
 
-public class BeerCreatedEventHandler : DomainEventHandlerBase<BeerCreated>
+public class BeerCreatedEventHandler : DomainEventHandlerAsync<BeerCreated>
 {
-	public override Task Handle(BeerCreated notification, CancellationToken cancellationToken)
+	public BeerCreatedEventHandler(ILoggerFactory loggerFactory) : base(loggerFactory)
 	{
-		// Update read model
+	}
+
+	public override Task HandleAsync(BeerCreated @event, CancellationToken cancellationToken = new ())
+	{
+		// Update ReadModel
 		return Task.CompletedTask;
 	}
 }

@@ -1,10 +1,10 @@
-﻿using BrewUp.Shared.Abstracts;
-using BrewUp.Shared.DomainIds;
+﻿using BrewUp.Shared.DomainIds;
 using BrewUp.Shared.Dtos;
+using Muflone.Messages.Commands;
 
 namespace BrewUp.Shared.Commands;
 
-public record LoadBeerInStock : Command
+public class LoadBeerInStock : Command
 {
 	public readonly BeerId BeerId;
 	public readonly Stock Stock;

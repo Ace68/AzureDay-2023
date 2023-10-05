@@ -1,32 +1,32 @@
-﻿using BrewUp.Shared.Abstracts;
-using BrewUp.Shared.DomainIds;
+﻿using BrewUp.Shared.DomainIds;
 using BrewUp.Shared.Dtos;
+using Muflone.Core;
 
 namespace BrewUp.Modules.Purchases.Domain.Entities;
 
-public class PurchaseLine : EntityBase
-{
-    private BeerId _beerId;
-    private BeerName _beerName;
-    private Quantity _quantity;
-    private Price _price;
+public class PurchaseLine : Entity
+{ 
+    internal BeerId BeerId { get; private set; }
+    internal BeerName BeerName { get; private set; }  
+    internal Quantity Quantity  { get; private set; }
+    internal Price Price  { get; private set; }
 
     protected PurchaseLine()
     {
-        _beerId = default!;
-        _beerName = default!;
-        _quantity = default!;
-        _price = default!;
+        BeerId = default!;
+        BeerName = default!;
+        Quantity = default!;
+        Price = default!;
     }
 
     internal static PurchaseLine CreatePurchaseLine(BeerId beerId, BeerName beerName, Quantity quantity, Price price)
     {
         return new PurchaseLine
         {
-            _beerId = beerId,
-            _beerName = beerName,
-            _quantity = quantity,
-            _price = price
+            BeerId = beerId,
+            BeerName = beerName,
+            Quantity = quantity,
+            Price = price
         };
     }
 }

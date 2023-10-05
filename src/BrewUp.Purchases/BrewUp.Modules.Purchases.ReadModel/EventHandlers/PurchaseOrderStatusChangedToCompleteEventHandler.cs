@@ -1,22 +1,24 @@
 ﻿using BrewUp.Modules.Purchases.Messages.Events;
-using BrewUp.Shared.Abstracts;
 using BrewUp.Shared.Events;
-using MediatR;
+using Microsoft.Extensions.Logging;
+using Muflone;
+using Muflone.Messages.Events;
 
 namespace BrewUp.Modules.Purchases.ReadModel.EventHandlers;
 
-public class PurchaseOrderStatusChangedToCompleteEventHandler : DomainEventHandlerBase<PurchaseOrderStatusChangedToComplete>
+public class PurchaseOrderStatusChangedToCompleteEventHandler : DomainEventHandlerAsync<PurchaseOrderStatusChangedToComplete>
 {
-	private readonly IMediator _serviceBus;
+	private readonly IEventBus _eventBus;
 
-	public PurchaseOrderStatusChangedToCompleteEventHandler(IMediator serviceBus)
+	public PurchaseOrderStatusChangedToCompleteEventHandler(IEventBus eventBus, ILoggerFactory loggerFactory) : base(loggerFactory)
 	{
-		_serviceBus = serviceBus;
+		_eventBus = eventBus;
 	}
 
-	public override async Task Handle(PurchaseOrderStatusChangedToComplete @event, CancellationToken cancellationToken)
+	public override async Task HandleAsync(PurchaseOrderStatusChangedToComplete @event,
+		CancellationToken cancellationToken = new ())
 	{
 		var beersReceived = new BeersReceived(@event.PurchaseOrderId, @event.Lines);
-		await _serviceBus.Publish(beersReceived, cancellationToken);
+		await _eventBus.PublishAsync(beersReceived, cancellationToken);
 	}
 }

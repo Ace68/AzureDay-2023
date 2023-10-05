@@ -1,8 +1,11 @@
-﻿using BrewUp.Modules.Purchases.Domain;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using BrewUp.Modules.Purchases.Domain;
+using BrewUp.Modules.Purchases.Messages.Events;
+using BrewUp.Modules.Purchases.ReadModel;
+using BrewUp.Modules.Purchases.SharedKernel;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using NetArchTest.Rules;
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 
 namespace BrewUp.Modules.Purchases.NetArchTests;
 
@@ -129,13 +132,13 @@ public class VerifyArchitectureTest
 		var netVersion = Environment.Version;
 
 		var purchasesAssemblies = (from folder in subFolders
-								   let binFolder = Path.Join(folder, "bin", "Debug", $"net{netVersion.Major}.{netVersion.Minor}")
-								   let files = Directory.GetFiles(binFolder)
-								   let folderArray = folder.Split(Path.DirectorySeparatorChar)
-								   select files.FirstOrDefault(f => f.EndsWith($"{folderArray[folderArray!.Length - 1]}.dll"))
+			let binFolder = Path.Join(folder, "bin", "Debug", $"net{netVersion.Major}.{netVersion.Minor}")
+			let files = Directory.GetFiles(binFolder)
+			let folderArray = folder.Split(Path.DirectorySeparatorChar)
+			select files.FirstOrDefault(f => f.EndsWith($"{folderArray[folderArray!.Length - 1]}.dll"))
 			into assemblyFilename
-								   where !assemblyFilename!.Contains("Test")
-								   select Assembly.LoadFile(assemblyFilename!)).ToList();
+			where !assemblyFilename!.Contains("Test")
+			select Assembly.LoadFile(assemblyFilename!)).ToList();
 
 		var purchasesTypes = Types.InAssemblies(purchasesAssemblies);
 		var purchasesResult = purchasesTypes

@@ -1,24 +1,22 @@
 ﻿using BrewUp.Modules.Purchases.Domain.Entities;
 using BrewUp.Modules.Purchases.Messages.Commands;
-using BrewUp.Modules.Purchases.Messages.Events;
-using BrewUp.Shared.Abstracts;
-using MediatR;
+using Microsoft.Extensions.Logging;
+using Muflone;
+using Muflone.Persistence;
 
 namespace BrewUp.Modules.Purchases.Domain.CommandHandlers;
 
-public sealed class CreatePurchaseOrderCommandHandler : CommandHandlerBase<CreatePurchaseOrder>
+public sealed class CreatePurchaseOrderCommandHandler : CommandHandlerBaseAsync<CreatePurchaseOrder>
 {
-	private readonly IPublisher _serviceBus;
 
-	public CreatePurchaseOrderCommandHandler(IPublisher serviceBus)
+	public CreatePurchaseOrderCommandHandler(IRepository repository, 
+		ILoggerFactory loggerFactory) : base(repository, loggerFactory)
 	{
-		_serviceBus = serviceBus;
 	}
 
-	public override async Task Handle(CreatePurchaseOrder command, CancellationToken cancellationToken)
+	public override async Task ProcessCommand(CreatePurchaseOrder command, CancellationToken cancellationToken = default)
 	{
-		// Do something with the command
-		var purchaseOrderCreated = PurchaseOrder.RaisePurchaseOrderCreated(command.PurchaseOrderId, command.SupplierId, command.Date, command.Lines);
-		await _serviceBus.Publish(purchaseOrderCreated, cancellationToken);
+		var aggregate = PurchaseOrder.CreatePurchaseOrder(command.PurchaseOrderId, command.SupplierId, command.Date, command.Lines);
+		await Repository.SaveAsync(aggregate, Guid.NewGuid());
 	}
 }

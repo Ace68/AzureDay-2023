@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.1.1" />
+    <ProjectReference Include="..\BrewUp.Shared\BrewUp.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BrewUp.Shared\BrewUp.Shared.csproj" />
+    <PackageReference Include="Muflone.Saga" Version="6.2.0" />
   </ItemGroup>
 
 </Project>

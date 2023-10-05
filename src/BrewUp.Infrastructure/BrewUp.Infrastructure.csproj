@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Muflone.Eventstore" Version="6.1.1" />
+      <PackageReference Include="Muflone.Saga.Persistence.MongoDb" Version="6.0.0" />
+      <PackageReference Include="Muflone.Transport.Azure" Version="6.1.5" />
+      <PackageReference Include="Muflone.Transport.Azure.Saga" Version="6.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BrewUp.Modules.Sagas\BrewUp.Modules.Sagas.csproj" />
+      <ProjectReference Include="..\BrewUp.Purchases\BrewUp.Modules.Purchases.Domain\BrewUp.Modules.Purchases.Domain.csproj" />
+      <ProjectReference Include="..\BrewUp.Purchases\BrewUp.Modules.Purchases.Messages\BrewUp.Modules.Purchases.Messages.csproj" />
+      <ProjectReference Include="..\BrewUp.Purchases\BrewUp.Modules.Purchases.ReadModel\BrewUp.Modules.Purchases.ReadModel.csproj" />
+      <ProjectReference Include="..\BrewUp.ReadModel\BrewUp.ReadModel.csproj" />
+      <ProjectReference Include="..\BrewUp.Warehouses\BrewUp.Modules.Warehouses.Domain\BrewUp.Modules.Warehouses.Domain.csproj" />
+      <ProjectReference Include="..\BrewUp.Warehouses\BrewUp.Modules.Warehouses.ReadModel\BrewUp.Modules.Warehouses.ReadModel.csproj" />
+    </ItemGroup>
+
+</Project>

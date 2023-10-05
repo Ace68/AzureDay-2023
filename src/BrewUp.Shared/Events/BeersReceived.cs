@@ -1,10 +1,10 @@
-﻿using BrewUp.Shared.Abstracts;
-using BrewUp.Shared.DomainIds;
+﻿using BrewUp.Shared.DomainIds;
 using BrewUp.Shared.Dtos;
+using Muflone.Messages.Events;
 
 namespace BrewUp.Shared.Events;
 
-public record BeersReceived : IntegrationEvent
+public class BeersReceived : IntegrationEvent
 {
 	public readonly PurchaseOrderId PurchaseOrderId;
 	public readonly IEnumerable<OrderLine> OrderLines;

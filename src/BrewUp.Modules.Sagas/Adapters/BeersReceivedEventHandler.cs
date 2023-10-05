@@ -1,22 +1,23 @@
-﻿using BrewUp.Shared.Abstracts;
-using BrewUp.Shared.Commands;
+﻿using BrewUp.Shared.Commands;
 using BrewUp.Shared.Events;
-using MediatR;
+using Microsoft.Extensions.Logging;
+using Muflone.Messages.Events;
+using Muflone.Persistence;
 
 namespace BrewUp.Modules.Sagas.Adapters;
 
-public sealed class BeersReceivedEventHandler : IntegrationEventHandlerBase<BeersReceived>
+public sealed class BeersReceivedEventHandler : IntegrationEventHandlerAsync<BeersReceived>
 {
-	private readonly IMediator _serviceBus;
+	private readonly IServiceBus _serviceBus;
 
-	public BeersReceivedEventHandler(IMediator serviceBus)
+	public BeersReceivedEventHandler(IServiceBus serviceBus, ILoggerFactory loggerFactory) : base(loggerFactory)
 	{
 		_serviceBus = serviceBus;
 	}
 
-	public override async Task Handle(BeersReceived @event, CancellationToken cancellationToken)
+	public override async Task HandleAsync(BeersReceived @event, CancellationToken cancellationToken = new ())
 	{
 		var command = new StartBeersReceivedSaga(@event.PurchaseOrderId, @event.OrderLines);
-		await _serviceBus.Send(command, cancellationToken);
+		await _serviceBus.SendAsync(command, cancellationToken);
 	}
 }

@@ -7,10 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\BrewUp.ReadModel\BrewUp.ReadModel.csproj" />
     <ProjectReference Include="..\..\BrewUp.Shared\BrewUp.Shared.csproj" />
     <ProjectReference Include="..\BrewUp.Modules.Purchases.Messages\BrewUp.Modules.Purchases.Messages.csproj" />
   </ItemGroup>

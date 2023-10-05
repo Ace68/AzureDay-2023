@@ -15,7 +15,6 @@ public static class PurchasesHelper
 		services.AddValidatorsFromAssemblyContaining<OrderValidator>();
 		services.AddSingleton<ValidationHandler>();
 		services.AddScoped<IPurchasesFacade, PurchasesFacade>();
-		services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(PurchasesFacade).Assembly));
 
 		services.AddPurchasesDomain();
 		services.AddPurchasesReadModel();

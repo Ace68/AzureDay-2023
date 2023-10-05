@@ -1,11 +1,16 @@
 ﻿using BrewUp.Modules.Purchases.Messages.Events;
-using BrewUp.Shared.Abstracts;
+using Microsoft.Extensions.Logging;
+using Muflone.Messages.Events;
 
 namespace BrewUp.Modules.Purchases.ReadModel.EventHandlers;
 
-public class PurchaseOrderCreatedEventHandler : DomainEventHandlerBase<PurchaseOrderCreated>
+public class PurchaseOrderCreatedEventHandler : DomainEventHandlerAsync<PurchaseOrderCreated>
 {
-	public override Task Handle(PurchaseOrderCreated @event, CancellationToken cancellationToken)
+	public PurchaseOrderCreatedEventHandler(ILoggerFactory loggerFactory) : base(loggerFactory)
+	{
+	}
+
+	public override Task HandleAsync(PurchaseOrderCreated @event, CancellationToken cancellationToken = new CancellationToken())
 	{
 		// Update the read model
 		return Task.CompletedTask;

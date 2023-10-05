@@ -1,10 +1,10 @@
-﻿using BrewUp.Shared.Abstracts;
-using BrewUp.Shared.DomainIds;
+﻿using BrewUp.Shared.DomainIds;
 using BrewUp.Shared.Dtos;
+using Muflone.Messages.Commands;
 
 namespace BrewUp.Shared.Commands;
 
-public record StartBeersReceivedSaga : Command
+public class StartBeersReceivedSaga : Command
 {
 	public readonly PurchaseOrderId PurchaseOrderId;
 

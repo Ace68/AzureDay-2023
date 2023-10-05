@@ -1,10 +1,10 @@
-﻿using BrewUp.Shared.Abstracts;
-using BrewUp.Shared.DomainIds;
+﻿using BrewUp.Shared.DomainIds;
 using BrewUp.Shared.Dtos;
+using Muflone.Messages.Events;
 
 namespace BrewUp.Shared.Events;
 
-public record BeerLoadedInStock : DomainEvent
+public class BeerLoadedInStock : DomainEvent
 {
 	public readonly BeerId BeerId;
 	public readonly Stock Stock;

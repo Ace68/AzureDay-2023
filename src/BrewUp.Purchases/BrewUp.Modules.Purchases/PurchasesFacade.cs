@@ -2,15 +2,15 @@
 using BrewUp.Modules.Purchases.Messages.Commands;
 using BrewUp.Modules.Purchases.SharedKernel.DomainIds;
 using BrewUp.Shared.DomainIds;
-using MediatR;
+using Muflone.Persistence;
 
 namespace BrewUp.Modules.Purchases;
 
 public sealed class PurchasesFacade : IPurchasesFacade
 {
-	private readonly IMediator _serviceBus;
+	private readonly IServiceBus _serviceBus;
 
-	public PurchasesFacade(IMediator serviceBus)
+	public PurchasesFacade(IServiceBus serviceBus)
 	{
 		_serviceBus = serviceBus ?? throw new ArgumentNullException(nameof(serviceBus));
 	}
@@ -22,7 +22,7 @@ public sealed class PurchasesFacade : IPurchasesFacade
 			new SupplierId(order.SupplierId), order.Date,
 			order.Lines.ToDto());
 
-		await _serviceBus.Send(createOrder, cancellationToken);
+		await _serviceBus.SendAsync(createOrder, cancellationToken);
 
 		return order.Id.ToString();
 	}
@@ -31,7 +31,7 @@ public sealed class PurchasesFacade : IPurchasesFacade
 	{
 		var command = new ChangePurchaseOrderStatusToComplete(new PurchaseOrderId(id));
 
-		await _serviceBus.Send(command, cancellationToken);
+		await _serviceBus.SendAsync(command, cancellationToken);
 	}
 
 	public Task<IEnumerable<Order>> GetPurchasesOrdersAsync(CancellationToken cancellationToken)

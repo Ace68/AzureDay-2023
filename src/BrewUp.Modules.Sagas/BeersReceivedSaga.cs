@@ -2,33 +2,34 @@
 using BrewUp.Shared.DomainIds;
 using BrewUp.Shared.Dtos;
 using BrewUp.Shared.Events;
-using MediatR;
+using Muflone.Persistence;
+using Muflone.Saga;
 
 namespace BrewUp.Modules.Sagas;
 
 public sealed class BeersReceivedSaga :
-	IRequestHandler<StartBeersReceivedSaga>,
-	INotificationHandler<BeerCreated>,
-	INotificationHandler<BeerLoadedInStock>
+	ISagaStartedByAsync<StartBeersReceivedSaga>,
+	ISagaEventHandlerAsync<BeerCreated>,
+	ISagaEventHandlerAsync<BeerLoadedInStock>
 {
 
-	private readonly IMediator _serviceBus;
+	private readonly IServiceBus _serviceBus;
 
-	public BeersReceivedSaga(IMediator serviceBus)
+	public BeersReceivedSaga(IServiceBus serviceBus)
 	{
 		_serviceBus = serviceBus;
 	}
-
-	public async Task Handle(StartBeersReceivedSaga command, CancellationToken cancellationToken)
+	
+	public async Task StartedByAsync(StartBeersReceivedSaga command)
 	{
 		foreach (var orderLine in command.OrderLines)
 		{
 			var createBeer = new CreateBeer(orderLine.BeerId, orderLine.BeerName);
-			await _serviceBus.Send(createBeer, cancellationToken);
+			await _serviceBus.SendAsync(createBeer, CancellationToken.None);
 		}
 	}
 
-	public async Task Handle(BeerCreated @event, CancellationToken cancellationToken)
+	public async Task HandleAsync(BeerCreated @event)
 	{
 		var loadBeerInStock = new LoadBeerInStock(@event.BeerId, new Stock(1),
 			new Price
@@ -37,13 +38,17 @@ public sealed class BeersReceivedSaga :
 				Value = 1
 			},
 			new PurchaseOrderId(Guid.NewGuid()));
-		await _serviceBus.Send(loadBeerInStock, cancellationToken);
+		await _serviceBus.SendAsync(loadBeerInStock, CancellationToken.None);
 	}
 
-	public Task Handle(BeerLoadedInStock @event, CancellationToken cancellationToken)
+	public Task HandleAsync(BeerLoadedInStock @event)
 	{
 		// Send email, update warehouse, etc.
 		return Task.CompletedTask;
+	}
+
+	public void Dispose()
+	{
 	}
 }
 

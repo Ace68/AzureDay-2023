@@ -1,5 +1,10 @@
-﻿using BrewUp.Shared.Abstracts;
+﻿using Muflone.Core;
 
 namespace BrewUp.Shared.DomainIds;
 
-public record PurchaseOrderId(Guid Value) : DomainId(Value);
+public class PurchaseOrderId : DomainId
+{
+    public PurchaseOrderId(Guid value) : base(value)
+    {
+    }
+}
