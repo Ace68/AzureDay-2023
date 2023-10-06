@@ -18,6 +18,6 @@ internal static class DomainHelper
             BeerName = l.BeerName,
             Quantity = l.Quantity,
             Price = l.Price
-        });
+        }).ToList();
     }
 }
