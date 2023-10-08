@@ -11,11 +11,11 @@ public static class InfrastructureHelper
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
         MongoDbSettings mongoDbSettings,
         ServiceBusSettings serviceBusSettings,
-        string everntStoreConnectionString)
+        string eventStoreConnectionString)
     {
         services.AddMongoDb(mongoDbSettings);
         services.AddMongoSagaStateRepository(new MongoSagaStateRepositoryOptions(mongoDbSettings.ConnectionString, mongoDbSettings.DatabaseName));
-        services.AddMufloneEventStore(everntStoreConnectionString);
+        services.AddMufloneEventStore(eventStoreConnectionString);
         services.AddAzureServiceBus(serviceBusSettings);
 
         return services;

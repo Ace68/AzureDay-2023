@@ -9,8 +9,13 @@ public class SerilogModule : IModule
 
 	public IServiceCollection RegisterModule(WebApplicationBuilder builder)
 	{
+		// var logger = new LoggerConfiguration()
+		// 	.ReadFrom.Configuration(builder.Configuration)
+		// 	.Enrich.FromLogContext()
+		// 	.CreateLogger();
+		
 		var logger = new LoggerConfiguration()
-			.ReadFrom.Configuration(builder.Configuration)
+			.WriteTo.File("Log\\BrewUpLogs.log", rollingInterval: RollingInterval.Day)
 			.Enrich.FromLogContext()
 			.CreateLogger();
 

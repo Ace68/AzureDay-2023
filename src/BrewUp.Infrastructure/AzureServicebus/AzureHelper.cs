@@ -35,7 +35,8 @@ public static class AzureHelper
             new PurchaseOrderStatusChangedToCompleteConsumer(serviceProvider.GetRequiredService<IEventBus>(), azureBusConfiguration, loggerFactory),
             
             new CreateBeerConsumer(repository, azureBusConfiguration, loggerFactory),
-            new BeerCreatedConsumer(azureBusConfiguration, loggerFactory),
+            // new BeerCreatedConsumer(azureBusConfiguration, loggerFactory),
+            new BeerCratedSagaConsumer(serviceProvider.GetRequiredService<IServiceBus>(), azureBusConfiguration, loggerFactory),
             
             new LoadBeerInStockConsumer(repository, azureBusConfiguration, loggerFactory),
             
