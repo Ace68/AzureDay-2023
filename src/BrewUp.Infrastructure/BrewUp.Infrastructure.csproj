@@ -7,10 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Muflone.Eventstore" Version="6.1.1" />
       <PackageReference Include="Muflone.Saga.Persistence.MongoDb" Version="6.0.0" />
       <PackageReference Include="Muflone.Transport.Azure" Version="6.1.5" />
       <PackageReference Include="Muflone.Transport.Azure.Saga" Version="6.1.0" />
+      <PackageReference Include="Muflone.Eventstore" Version="6.1.1" />
     </ItemGroup>
 
     <ItemGroup>

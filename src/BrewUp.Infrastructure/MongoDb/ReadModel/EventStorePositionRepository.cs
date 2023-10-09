@@ -40,7 +40,8 @@ public class EventStorePositionRepository : IEventStorePositionRepository
 		catch (Exception e)
 		{
 			_logger.LogError(
-				$"EventStorePositionRepository: Error getting LastSavedPostion, Message: {e.Message}, StackTrace: {e.StackTrace}");
+				"EventStorePositionRepository: Error getting LastSavedPostion, Message: {EMessage}, StackTrace: {EStackTrace}",
+				e.Message, e.StackTrace);
 			throw;
 		}
 	}
@@ -75,7 +76,8 @@ public class EventStorePositionRepository : IEventStorePositionRepository
 		catch (Exception e)
 		{
 			_logger.LogError(
-				$"EventStorePositionRepository: Error while updating commit position: {e.Message}, StackTrace: {e.StackTrace}");
+				"EventStorePositionRepository: Error while updating commit position: {EMessage}, StackTrace: {EStackTrace}",
+				e.Message, e.StackTrace);
 			throw;
 		}
 	}

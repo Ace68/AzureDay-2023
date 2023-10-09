@@ -9,6 +9,9 @@ public class Beer : AggregateRoot
 {
     private BeerId _beerId = default!;
     private BeerName _beerName = default!;
+    
+    private Stock _stock = default!;
+    private Price _price = default!;
 
     protected Beer()
     {
@@ -30,6 +33,13 @@ public class Beer : AggregateRoot
         
         _beerId = @event.BeerId;
         _beerName = @event.BeerName;
+
+        _stock = new Stock(0);
+        _price = new Price
+        {
+            Value = 0,
+            Currency = string.Empty
+        };
     }
 
     internal void LoadBeerInStock(BeerId beerId, Stock stock, Price price, PurchaseOrderId purchaseOrderId)
@@ -39,7 +49,8 @@ public class Beer : AggregateRoot
 
     private void Apply(BeerLoadedInStock @event)
     {
-        
+        _stock = new Stock(_stock.Value + @event.Stock.Value);
+        _price = @event.Price;
     }
 }
     
