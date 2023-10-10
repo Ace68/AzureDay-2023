@@ -4,7 +4,7 @@ namespace BrewUp.Modules;
 
 public class WarehousesModule : IModule
 {
-	public bool IsEnabled => false;
+	public bool IsEnabled => true;
 	public int Order => 0;
 
 	public IServiceCollection RegisterModule(WebApplicationBuilder builder)
